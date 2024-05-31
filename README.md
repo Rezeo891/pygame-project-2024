@@ -1,3 +1,5 @@
 # Pygame Project
 
-1111
+# TO START:
+Run python main.py to start the game.
+
