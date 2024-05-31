@@ -1,6 +1,6 @@
 # Pygame Project
 
-# To start:
+# To start
 Run python main.py to start the game.
 
 # Features
