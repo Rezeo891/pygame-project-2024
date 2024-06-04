@@ -1,4 +1,4 @@
-# Pygame Project
+# Pygame Project - Survivor Game
 # Lucas Zhang
 
 import pygame
@@ -30,10 +30,9 @@ boss_image = pygame.image.load('./images/enemy.jpg')
 background_image = pygame.image.load('./images/background.jpg')
 
 player_image = pygame.transform.scale(player_image,(50,50))
+player_image.set_colorkey(WHITE)
 enemy_image = pygame.transform.scale(enemy_image,(50,50))
-background_image = pygame.transform.scale(background_image,(1280,960))
-
-# Optionally, scale the background image to fit the screen size
+enemy_image.set_colorkey(WHITE)
 background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # Player class
