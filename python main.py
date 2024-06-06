@@ -35,7 +35,7 @@ player_image.set_colorkey(WHITE)
 enemy_image = pygame.transform.scale(enemy_image, (50, 50))
 enemy_image.set_colorkey(WHITE)
 boss_image = pygame.transform.scale(enemy_image, (250, 250))
-enemy_image.set_colorkey(WHITE)
+boss_image.set_colorkey(WHITE)
 background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # Player class
