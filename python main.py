@@ -9,8 +9,8 @@ import math
 pygame.init()
 
 # Screen dimensions
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 960
 
 # Colors
 WHITE = (255, 255, 255)
@@ -34,6 +34,8 @@ player_image = pygame.transform.scale(player_image, (50, 50))
 player_image.set_colorkey(WHITE)
 enemy_image = pygame.transform.scale(enemy_image, (50, 50))
 enemy_image.set_colorkey(WHITE)
+boss_image = pygame.transform.scale(enemy_image, (250, 250))
+enemy_image.set_colorkey(WHITE)
 background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # Player class
@@ -43,8 +45,8 @@ class Player(pygame.sprite.Sprite):
        self.image = player_image
        self.rect = self.image.get_rect()
        self.rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
-       self.speed = 10
-       self.health = 100
+       self.speed = 5
+       self.health = 250
 
    def update(self):
        keys = pygame.key.get_pressed()
@@ -94,37 +96,38 @@ class Bullet(pygame.sprite.Sprite):
 
 # Enemy class
 class Enemy(pygame.sprite.Sprite):
-   def __init__(self):
-       super().__init__()
-       self.image = enemy_image
-       self.rect = self.image.get_rect()
-       self.rect.x = random.choice([-30, SCREEN_WIDTH + 30])
-       self.rect.y = random.choice([-30, SCREEN_HEIGHT + 30])
-       self.speed = random.uniform(1, 2)
-       self.health = 1  # Set enemy health
+    def __init__(self):
+        super().__init__()
+        self.image = enemy_image
+        self.rect = self.image.get_rect()
+        self.rect.x = random.choice([-30, SCREEN_WIDTH + 30])
+        self.rect.y = random.choice([-30, SCREEN_HEIGHT + 30])
+        self.speed = random.uniform(1, 3)
+        self.health = 2  # Set enemy health
 
-   def update(self):
-       direction = pygame.math.Vector2(player.rect.centerx - self.rect.centerx,
-                                       player.rect.centery - self.rect.centery)
-       direction = direction.normalize()
-       self.rect.x += direction.x * self.speed
-       self.rect.y += direction.y * self.speed
+    def update(self):
+        direction = pygame.math.Vector2(player.rect.centerx - self.rect.centerx,
+                                        player.rect.centery - self.rect.centery)
+        if direction.length() != 0:  # Check if the vector length is not zero
+            direction = direction.normalize()
+            self.rect.x += direction.x * self.speed
+            self.rect.y += direction.y * self.speed
 
-       # Avoid stacking
-       for other in enemies:
-           if other != self and pygame.sprite.collide_rect(self, other):
-               self.avoid(other)
+        # Avoid stacking
+        for other in enemies:
+            if other != self and pygame.sprite.collide_rect(self, other):
+                self.avoid(other)
 
-   def avoid(self, other):
-       dx = self.rect.x - other.rect.x
-       dy = self.rect.y - other.rect.y
-       distance = math.sqrt(dx * dx + dy * dy)
-       if distance == 0:
-           distance = 0.1
-       move_x = (dx / distance) * self.speed
-       move_y = (dy / distance) * self.speed
-       self.rect.x += move_x
-       self.rect.y += move_y
+    def avoid(self, other):
+        dx = self.rect.x - other.rect.x
+        dy = self.rect.y - other.rect.y
+        distance = math.sqrt(dx * dx + dy * dy)
+        if distance == 0:
+            distance = 0.1
+        move_x = (dx / distance) * self.speed
+        move_y = (dy / distance) * self.speed
+        self.rect.x += move_x
+        self.rect.y += move_y
 
 # Boss class
 class Boss(Enemy):
@@ -134,8 +137,8 @@ class Boss(Enemy):
        self.rect = self.image.get_rect()
        self.rect.x = random.choice([-60, SCREEN_WIDTH + 60])
        self.rect.y = random.choice([-60, SCREEN_HEIGHT + 60])
-       self.speed = 0.8  # Set boss speed slower than normal enemies
-       self.health = 20  # Set boss health
+       self.speed = 4.5  # Set boss speed
+       self.health = 50 # Set boss health
 
    def update(self):
        super().update()
@@ -253,13 +256,13 @@ def main():
            bullet_timer -= 1
 
        # Spawn enemies
-       if not boss_spawned and len(enemies) < 10:
+       if not boss_spawned and len(enemies) < 35:
            enemy = Enemy()
            all_sprites.add(enemy)
            enemies.add(enemy)
 
 
-       if score >= 50 and not boss_spawned:
+       if score >= 99 and not boss_spawned:
            boss = Boss()
            all_sprites.add(boss)
            enemies.add(boss)
