@@ -1,4 +1,4 @@
-# Pygame Project
+# Pygame Project - Survivor Game
 
 # To start
 Run python main.py to start the game.
