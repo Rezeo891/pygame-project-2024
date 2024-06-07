@@ -22,7 +22,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Survivor Game")
 
 # Load images
-player_image = pygame.image.load('./images/player.png')
+player_image = pygame.image.load('./images/player.webp')
 enemy_image = pygame.image.load('./images/enemy.jpg')
 boss_image = pygame.image.load('./images/enemy.jpg')
 background_image = pygame.image.load('./images/background.jpg')
