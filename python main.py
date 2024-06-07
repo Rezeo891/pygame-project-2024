@@ -5,8 +5,8 @@ import pygame
 import random
 import math
 
-# Initialize Pygame
 pygame.init()
+clock = pygame.time.Clock()
 
 # Screen dimensions
 SCREEN_WIDTH = 1280
@@ -20,9 +20,6 @@ RED = (255, 0, 0)
 # Set up the display
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Survivor Game")
-
-# Clock for controlling frame rate
-clock = pygame.time.Clock()
 
 # Load images
 player_image = pygame.image.load('./images/player.png')
@@ -143,14 +140,14 @@ class Boss(Enemy):
    def update(self):
        super().update()
 
-# Function to display text
+# Display text
 def draw_text(text, font, color, surface, x, y):
    textobj = font.render(text, True, color)
    textrect = textobj.get_rect()
    textrect.topleft = (x, y)
    surface.blit(textobj, textrect)
 
-# Function to display game over screen
+# Display game over screen
 def game_over_screen():
    screen.fill(BLACK)
    font = pygame.font.Font(None, 74)
@@ -171,7 +168,7 @@ def game_over_screen():
                    waiting = False
                    main()
 
-# Function to display congratulations screen
+# Display congratulations screen
 def congratulations_screen():
    screen.fill(BLACK)
    font = pygame.font.Font(None, 74)
@@ -314,15 +311,12 @@ def main():
        draw_text(f"Score: {score}", font, WHITE, screen, 10, 10)
        draw_text(f"Lives: {player.health}", font, WHITE, screen, 10, 50)
 
-       # Flip the display
        pygame.display.flip()
 
-       # Cap the frame rate
        clock.tick(60)
 
    if game_over:
        game_over_screen()
 
-# Run the game
 main()
 pygame.quit()
